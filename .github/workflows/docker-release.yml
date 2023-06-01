@@ -1,20 +1,6 @@
 name: Build Official Docker Images
 
-on:
-  workflow_dispatch:
-  pull_request:
-    paths:
-      - Dockerfile
-      - docker.Makefile
-      - .github/workflows/docker-release.yml
-  push:
-    branches:
-      - nightly
-    tags:
-      # Release candidate tags look like: v1.11.0-rc1
-      - v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+
-      - ciflow/nightly/*
-
+on: [pull_request]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name == 'workflow_dispatch' }}
@@ -31,8 +17,7 @@ env:
 
 jobs:
   build:
-    if: ${{ github.repository == 'pytorch/pytorch' }}
-    runs-on: [self-hosted, linux.2xlarge]
+    runs-on: [self-hosted, linux]
     timeout-minutes: 240
     strategy:
       matrix:
