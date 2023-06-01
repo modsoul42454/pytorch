@@ -15,7 +15,6 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+
       - ciflow/nightly/*
 
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name == 'workflow_dispatch' }}
   cancel-in-progress: true
